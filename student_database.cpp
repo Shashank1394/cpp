@@ -63,7 +63,7 @@ void updateTelephone(Student &student, const string &newTelephoneNumber) {
 
 int main() {
   try {
-    Student student1("John Doe", -101, "10th", 'B', "2005-08-15", "O+",
+    Student student1("John Doe", 101, "10th", 'B', "2005-08-15", "O+",
                      "123 Elm Street", "1234567890", "DL12345");
 
     student1.display();
