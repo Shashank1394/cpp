@@ -12,6 +12,9 @@ void create();
 void insert_at_beginning();
 void insert_at_last();
 void insert_in_between();
+void delete_first_node();
+void delete_last_node();
+void delete_selected_node();
 void display();
 
 int main() {
@@ -23,7 +26,10 @@ int main() {
     std::cout << "\n3. Insert at last";
     std::cout << "\n4. Insert in between";
     std::cout << "\n5. Display";
-    std::cout << "\n6. Exit";
+    std::cout << "\n6. Delete first node";
+    std::cout << "\n7. Delete last node";
+    std::cout << "\n8. Delete selected node";
+    std::cout << "\n0. Exit";
     std::cout << "\nEnter your choice: ";
     std::cin >> ch;
 
@@ -44,6 +50,15 @@ int main() {
       display();
       break;
     case 6:
+      delete_first_node();
+      break;
+    case 7:
+      delete_last_node();
+      break;
+    case 8:
+      delete_selected_node();
+      break;
+    case 0:
       return 0;
     default:
       std::cout << "Invalid choice!\n";
@@ -63,6 +78,7 @@ void create() {
   } else {
     std::cout << "List already created. Use insert operations.\n";
   }
+  display();
 }
 
 void insert_at_beginning() {
@@ -79,6 +95,7 @@ void insert_at_beginning() {
     head = newnode;
   }
   std::cout << "Inserted at the beginning.\n";
+  display();
 }
 
 void insert_at_last() {
@@ -100,11 +117,12 @@ void insert_at_last() {
   curr->next = newnode;
   newnode->prev = curr;
   std::cout << "Inserted at the last.\n";
+  display();
 }
 
 void insert_in_between() {
   if (head == NULL) {
-    std::cout << "List is empty. Creating a new list...\n";
+    std::cout << "\nList is empty. Creating a new list...\n";
     create();
     return;
   }
@@ -125,7 +143,7 @@ void insert_in_between() {
     i++;
   }
 
-  if (i < position - 1) {
+  if (curr->next == NULL) {
     std::cout << "Position out of range. Inserting at the end.\n";
     insert_at_last();
     return;
@@ -144,11 +162,75 @@ void insert_in_between() {
   newnode->prev = curr;
 
   std::cout << "Inserted at position " << position << ".\n";
+  display();
+}
+
+void delete_first_node() {
+  if (head == NULL) {
+    std::cout << "\nDoubly does not double!";
+  } else {
+    node *curr = head;
+    head = head->next;
+    head->prev = NULL;
+    delete curr;
+    std::cout << "\nFirst node removed successfully!";
+    display();
+  }
+}
+
+void delete_last_node() {
+  if (head == NULL) {
+    std::cout << "\nDoubly does not double!";
+  } else {
+    node *curr = head;
+    while (curr->next != NULL)
+      curr = curr->next;
+    curr->prev->next = NULL;
+    delete curr;
+    std::cout << "\nLast node removed successfully!";
+    display();
+  }
+}
+
+void delete_selected_node() {
+  if (head == NULL) {
+    std::cout << "\nDoubly does not double!";
+    return;
+  }
+
+  int position;
+  std::cout << "\nEnter the position to delete: ";
+  std::cin >> position;
+
+  if (position <= 1) {
+    delete_first_node();
+    return;
+  }
+
+  node *curr = head;
+  int i = 1;
+  while (i < position && curr->next != NULL) {
+    curr = curr->next;
+    i++;
+  }
+
+  if (curr == NULL) {
+    std::cout << "Position out of range. Deleted the last node insetead.\n";
+    delete_last_node();
+    return;
+  }
+
+  curr->prev->next = curr->next;
+  curr->next->prev = curr->prev;
+  delete curr;
+
+  std::cout << "Deleted at position " << position << ".\n";
+  display();
 }
 
 void display() {
   if (head == NULL) {
-    std::cout << "List is empty.\n";
+    std::cout << "\nList is empty.\n";
     return;
   }
 
