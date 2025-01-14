@@ -16,6 +16,7 @@ void delete_first_node();
 void delete_last_node();
 void delete_selected_node();
 void display();
+void display_reverse();
 
 int main() {
   int ch;
@@ -29,6 +30,7 @@ int main() {
     std::cout << "\n6. Delete first node";
     std::cout << "\n7. Delete last node";
     std::cout << "\n8. Delete selected node";
+    std::cout << "\n9. Display Reverse";
     std::cout << "\n0. Exit";
     std::cout << "\nEnter your choice: ";
     std::cin >> ch;
@@ -57,6 +59,9 @@ int main() {
       break;
     case 8:
       delete_selected_node();
+      break;
+    case 9:
+      display_reverse();
       break;
     case 0:
       return 0;
@@ -239,6 +244,24 @@ void display() {
   while (curr != NULL) {
     std::cout << curr->data << " <-> ";
     curr = curr->next;
+  }
+  std::cout << "NULL\n";
+}
+
+void display_reverse() {
+  if (head == NULL) {
+    std::cout << "\nList is empty.\n";
+    return;
+  }
+  node *curr = head;
+  std::cout << "\nDoubly Linked List: ";
+  while (curr->next != NULL) {
+    curr = curr->next;
+  }
+
+  while (curr != NULL) {
+    std::cout << curr->data << " <-> ";
+    curr = curr->prev;
   }
   std::cout << "NULL\n";
 }
