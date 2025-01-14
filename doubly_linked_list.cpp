@@ -214,7 +214,7 @@ void delete_selected_node() {
 
   node *curr = head;
   int i = 1;
-  while (i < position && curr->next != NULL) {
+  while (i < position - 1 && curr->next != NULL) {
     curr = curr->next;
     i++;
   }
@@ -225,9 +225,9 @@ void delete_selected_node() {
     return;
   }
 
-  curr->prev->next = curr->next;
-  curr->next->prev = curr->prev;
-  delete curr;
+  curr->next = curr->next->next;
+  delete (curr->next->prev);
+  curr->next->prev = curr;
 
   std::cout << "Deleted at position " << position << ".\n";
   display();
