@@ -10,18 +10,20 @@ int main() {
   int y{getNumber()};
 
   char op{};
-  std::cout << "Enter the operation (+,-,*,/): ";
+  std::cout << "Enter the operation (+, -, *, /): ";
   std::cin >> op;
 
-  int result{};
   if (op == '+' || op == '-' || op == '*' || op == '/') {
-    result = evaluate(x, y, op);
+    if (op == '/' && y == 0) {
+      std::cout << "Error: You cannot divide by zero.";
+      return 1;
+    }
+    int result = evaluate(x, y, op);
+    std::cout << x << " " << op << " " << y << " = " << result;
   } else {
-    std::cout << "Invalid operation";
-    return 0;
+    std::cout << "Invalid operation. Please use one of (+, -, *, /).";
   }
 
-  std::cout << x << " " << op << " " << y << " = " << result;
   return 0;
 }
 
@@ -35,16 +37,14 @@ int evaluate(int x, int y, char op) {
   switch (op) {
   case '+':
     return x + y;
-    break;
   case '-':
     return x - y;
-    break;
   case '*':
     return x * y;
-    break;
   case '/':
     return x / y;
-    break;
+  default:
+    std::cerr << "Unexpected operator. This should not occur.\n";
+    return 0;
   }
-  return 0;
 }
